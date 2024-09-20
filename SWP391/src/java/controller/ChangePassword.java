@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.Validation;
 
 /**
  *
@@ -90,7 +91,14 @@ public class ChangePassword extends HttpServlet {
         String renewPassword = request.getParameter("renewPassword");
         HttpSession session = request.getSession();
         Integer id = (Integer) session.getAttribute("id");
-
+        // Validate password
+        Validation val = new Validation();
+        String errorMessage = val.ValidatePassword(newPassword);
+        if(!errorMessage.equals("true")){
+            request.setAttribute("message", errorMessage);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/ChangePassword.jsp");
+            dispatcher.forward(request, response);
+        }
         // Check if logged in
         if(id != null) {
             // Logged in, change password and redirect to page with resultMessage
