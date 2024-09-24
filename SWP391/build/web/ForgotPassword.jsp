@@ -65,7 +65,7 @@
                         </form>
 
                         <c:if test="${not empty message}">
-                            <h1 class="text-white mb-4 message">${message}</h1>
+                            <p class="text-white mt-3 message">${message}</p>
                         </c:if>
                     </div>
                 </div>

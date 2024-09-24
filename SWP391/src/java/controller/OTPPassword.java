@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.MessagingException;
-import model.*;
 import utils.EmailUtility;
 import utils.PasswordUtil;
 import utils.RandomGenerate;
@@ -26,8 +25,8 @@ import utils.RandomGenerate;
  *
  * @author ADMIN
  */
-@WebServlet(name = "ForgotPassword", urlPatterns = {"/ForgotPassword"})
-public class ForgotPassword extends HttpServlet {
+@WebServlet(name = "OTPPassword", urlPatterns = {"/OTP"})
+public class OTPPassword extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +45,10 @@ public class ForgotPassword extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ForgotPassword</title>");
+            out.println("<title>Servlet OTPcheck</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ForgotPassword at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet OTPcheck at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,7 +66,58 @@ public class ForgotPassword extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.sendRedirect("ForgotPassword.jsp");
+
+        // Retrieve old, new, and re-entered passwords from the request
+        String oldPassword = request.getParameter("oldPassword");
+        String newPassword = request.getParameter("newPassword");
+        String renewPassword = request.getParameter("renewPassword");
+        PasswordUtil pw = new PasswordUtil();
+
+        EmailUtility em = new EmailUtility();
+        AccountDAO ad = new AccountDAO();
+
+        HttpSession session = request.getSession();
+        int id = (int) session.getAttribute("id"); // Ensure session has valid ID
+
+        // Check the input for password validation
+        String message = ad.checkInput(id, pw.hashPassword(oldPassword), newPassword, renewPassword);
+
+        // If validation fails, forward back to ChangePassword.jsp with the error message
+        if (!"true".equals(message)) {
+            request.setAttribute("message", message);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/ChangePassword.jsp");
+            dispatcher.forward(request, response);
+            return; // Stop further execution after forwarding
+        }
+
+        // Save the new password in the session for later use
+        session.setAttribute("newPassword", newPassword);
+
+        // Retrieve the user's email based on their account ID
+        String email = ad.findEmailByAccountID(id);
+
+        RandomGenerate rd = new RandomGenerate();
+        // Generate a random OTP
+        String otp = rd.generateNumberOTP();
+
+        try {
+            // Send the OTP via email
+            em.sendEmail(email, "OTP Đổi mật khẩu", "Đây là OTP : " + otp);
+        } catch (MessagingException ex) {
+            Logger.getLogger(OTPPassword.class.getName()).log(Level.SEVERE, null, ex);
+
+            // Handle the error gracefully, redirect with error message
+            request.setAttribute("message", "Unable to send OTP, please try again.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/ChangePassword.jsp");
+            dispatcher.forward(request, response);
+            return; // Stop further execution after forwarding
+        }
+
+        // Save the OTP in the session for later verification
+        session.setAttribute("otp", otp);
+
+        // Redirect the user to the OTP verification page
+        response.sendRedirect("OTPPassword.jsp");
     }
 
     /**
@@ -81,46 +131,18 @@ public class ForgotPassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        PasswordUtil pw = new PasswordUtil();
-        AccountDAO ad = new AccountDAO();
-        RandomGenerate rd = new RandomGenerate();
-        EmailUtility em = new EmailUtility();
-        String email = request.getParameter("email");
+        HttpSession session = request.getSession();
+        String userOtp = request.getParameter("otp");
+        String generatedOtp = (String) session.getAttribute("otp");
 
-        Account acc = ad.findAccountByEmail(email);
-
-        if (acc == null) {
-            // Account not found, show error message
-            request.setAttribute("message", "Account not found for this email.");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/ForgotPassword.jsp");
-            dispatcher.forward(request, response);
-            return;
-        }
-
-        String randomPass = rd.generateRandomString(8);
-
-        boolean note = ad.changePassword(acc.getAccountID(), pw.hashPassword(randomPass));
-
-        if (note) {
-            try {
-                em.sendEmail(email, "Mật khẩu mới", "<div>Mật khẩu mới :   " + randomPass + "</div>"
-                        + "<div> Xin hãy đổi mật khẩu sau khi đăng nhập </div>");
-            } catch (MessagingException ex) {
-                request.setAttribute("message", "Something failed, please try again |");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/ForgotPassword.jsp");
-                dispatcher.forward(request, response);
-            }
-            request.setAttribute("message", """
-                                            Reset successfuly, check your email for new password !
-                                            Please change your password after login""");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/ForgotPassword.jsp");
+        if (userOtp != null && userOtp.equals(generatedOtp)) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/changepass");
             dispatcher.forward(request, response);
         } else {
-            request.setAttribute("message", "Something failed, please try again |");
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/ForgotPassword.jsp");
+            request.setAttribute("message", "Invalid OTP. Please try again.");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/OTPPassword.jsp");
             dispatcher.forward(request, response);
         }
-
     }
 
     /**

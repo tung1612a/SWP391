@@ -133,6 +133,9 @@
                                 <div class="col-12 text-center mt-3">
                                     <p class="text-white">Don't have an account? <a href="Signup.jsp" style="color: #FFA737;">Sign up</a></p>
                                 </div>
+                                <div class="col-12 text-center mt-3">
+                                     <a href="ForgotPassword" style="color: #FFA737;">Forgot password</a></p>
+                                </div>
                             </form>
                         </div>
                     </div>
