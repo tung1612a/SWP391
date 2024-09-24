@@ -50,11 +50,11 @@
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">Account</h5>
                         <h1 class="text-white mb-4">Reset Password</h1>
                         <p class="text-white mb-4">Please enter your email</p>
-                        <form action="changepass" method="post">
+                        <form action="ForgotPassword" method="post">
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="password" class="form-control" id="email" placeholder="Email" name="email" required>
+                                        <input type="text" class="form-control" id="email" placeholder="Email" name="email" required>
                                         <label for="email">Email</label>
                                     </div>
                                     <div class="col-12">
@@ -63,9 +63,10 @@
                                 </div>
                             </div>
                         </form>
-                            <c:if test="${not empty message}">
-                                <h1 class="text-white mb-4 message">${message}</div>
-                            </c:if>
+
+                        <c:if test="${not empty message}">
+                            <h1 class="text-white mb-4 message">${message}</h1>
+                        </c:if>
                     </div>
                 </div>
             </div>
