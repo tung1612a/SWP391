@@ -66,7 +66,7 @@ public class AccountDAO extends DBContext {
         SELECT a.AccountID, a.Username, a.Password, a.RoleID
         FROM Account a
         JOIN Customer c ON a.AccountID = c.AccountID
-        WHERE c.Email = ?;
+        WHERE c.Email = ?
     """;
 
         try {
