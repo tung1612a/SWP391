@@ -19,7 +19,7 @@ public class LoginDAO extends DBContext{
         try {
             PreparedStatement st = connection.prepareStatement(sql);
             
-
+            
             st.setString(1, username);
             st.setString(2, password);
             ResultSet rs = st.executeQuery();
@@ -62,7 +62,7 @@ public class LoginDAO extends DBContext{
      public static void main(String[] args) {
         
         LoginDAO d = new LoginDAO();
-         Account a = d.login("tung", "123");
+         Account a = d.login("test", "123");
          if (a != null) {
         System.out.println("Login successful!");
         System.out.println("Account ID: " + a.getAccountID());
