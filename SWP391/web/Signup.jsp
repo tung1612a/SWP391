@@ -1,7 +1,7 @@
 <%-- 
-    Document   : Login
-    Created on : Sep 19, 2024, 3:17:31 PM
-    Author     : tran tung
+    Document   : Signup
+    Created on : Sep 23, 2024, 5:27:00 PM
+    Author     : Admin
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -82,12 +82,12 @@
 
                 <div class="container-xxl py-5 bg-dark hero-header mb-5">
                     <div class="container text-center my-5 pt-5 pb-4">
-                        <h1 class="display-3 text-white mb-3 animated slideInDown">Login</h1>
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Sign Up</h1>
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb justify-content-center text-uppercase">
                                 <li class="breadcrumb-item"><a href="#">Home</a></li>
                                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                                <li class="breadcrumb-item text-white active" aria-current="page">Login</li>
+                                <li class="breadcrumb-item text-white active" aria-current="page">Sign Up</li>
                             </ol>
                         </nav>
                     </div>
@@ -109,31 +109,75 @@
                     <div class="col-md-6 bg-dark d-flex align-items-center">
                         <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
                             <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
-                            <h1 class="text-white mb-4">Book A Table Online</h1>
-                            <form action="login" method="post">
+                            <h1 class="text-white mb-4">Sign Up</h1>
+                            <form action="signup" method="post">
                                 <div class="row g-3">
+                                    <!-- Username -->
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Username" name="username">
-                                            <label for="name">Username</label>
-                                        </div>
-                                    </div>
-                                    <br/>
-                                    <div class="col-md-6">
-                                        <div class="form-floating">
-                                            <input type="password" class="form-control" id="email" placeholder="Password" name="password">
-                                            <label for="email">Password</label>
+                                            <input type="text" class="form-control" id="username" placeholder="Username" name="username" required>
+                                            <label for="username">Username</label>
                                         </div>
                                     </div>
 
-                                </div>
+                                    <!-- Password -->
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+                                            <label for="password">Password</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Customer Name -->
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="customerName" placeholder="Name" name="customerName" required>
+                                            <label for="customerName">Name</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Phone Number -->
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="phone" placeholder="Phone Number" name="phoneNumber"
+                                                   pattern="^0\d{9}$" 
+                                                   title="Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số. Ví dụ: 0123456789" 
+                                                   required>
+                                            <label for="phone">Phone Number</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div class="col-md-6">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
+                                            <label for="email">Email</label>
+                                        </div>
+                                    </div>
+                                </div><br>
+
+                                <!-- Register Button -->
                                 <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Login</button>
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Register</button>
                                 </div>
-                                <div class="col-12 text-center mt-3">
-                                    <p class="text-white">Don't have an account? <a href="Signup.jsp" style="color: #FFA737;">Sign up</a></p>
+
+                                <!-- Hiển thị thông báo lỗi -->
+                                <div class="col-12">
+                                    <p class="text-danger mt-2">
+                                        <%
+                                            // Không cần khai báo session, vì nó đã có sẵn
+                                            String errorMessage = (String) session.getAttribute("errorMessage");
+                                            if (errorMessage != null) { 
+                                                out.print(errorMessage); 
+                                                session.removeAttribute("errorMessage"); // Xóa thông báo sau khi hiển thị
+                                            }
+                                        %>
+                                    </p>
                                 </div>
                             </form>
+
+
+
                         </div>
                     </div>
                 </div>
