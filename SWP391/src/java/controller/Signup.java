@@ -34,26 +34,25 @@ public class Signup extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Lấy dữ liệu từ form đăng ký
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        String customerName = request.getParameter("customerName");
-        String phoneNumber = request.getParameter("phoneNumber");
-        String email = request.getParameter("email");
-
         HttpSession session = request.getSession();
 
-        // Sử dụng Validation để kiểm tra mật khẩu
-        Validation validator = new Validation();
-        String passwordValidationResult = validator.ValidatePassword(password);
+        // Lấy dữ liệu từ form đăng ký
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+        String customerName = (String) session.getAttribute("customerName");
+        String phoneNumber = (String) session.getAttribute("phoneNumber");
+        String email = (String) session.getAttribute("email");
 
-        if (!passwordValidationResult.equals("true")) {
-            // Nếu mật khẩu không hợp lệ, lưu thông báo lỗi vào session
-            session.setAttribute("errorMessage", passwordValidationResult);
-            response.sendRedirect("Signup.jsp");
-            return;
-        }
-
+//        // Sử dụng Validation để kiểm tra mật khẩu
+//        Validation validator = new Validation();
+//        String passwordValidationResult = validator.ValidatePassword(password);
+//
+//        if (!passwordValidationResult.equals("true")) {
+//            // Nếu mật khẩu không hợp lệ, lưu thông báo lỗi vào session
+//            session.setAttribute("errorMessage", passwordValidationResult);
+//            response.sendRedirect("Signup.jsp");
+//            return;
+//        }
         // Kiểm tra nếu đăng ký thành công
         boolean isRegistered = signupDao.registerCustomer(username, password, customerName, phoneNumber, email);
 
@@ -61,6 +60,11 @@ public class Signup extends HttpServlet {
             // Xóa thông báo lỗi trong session nếu đăng ký thành công
             session.removeAttribute("errorMessage");
             response.sendRedirect("Login.jsp");
+            session.removeAttribute("username");
+            session.removeAttribute("password");
+            session.removeAttribute("customerName");
+            session.removeAttribute("email");
+            session.removeAttribute("phoneNumber");
         } else {
             // Nếu username đã tồn tại, lưu thông báo lỗi vào session
             session.setAttribute("errorMessage", "Username đã tồn tại. Vui lòng chọn username khác.");
