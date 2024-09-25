@@ -107,6 +107,7 @@ public class ChangePassword extends HttpServlet {
             String resultMessage = "";
             if (note) {
                 resultMessage += "succes";
+                session.removeAttribute("newPassword");
             } else {
                 resultMessage += "fail";
             }

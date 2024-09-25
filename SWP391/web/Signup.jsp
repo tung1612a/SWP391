@@ -56,9 +56,9 @@
                     </div>
                     <div class="col-md-6 bg-dark d-flex align-items-center">
                         <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                            <h5 class="section-title ff-secondary text-start text-primary fw-normal">Reservation</h5>
+                            <h5 class="section-title ff-secondary text-start text-primary fw-normal"><a href="Login.jsp">back</a></h5>
                             <h1 class="text-white mb-4">Sign Up</h1>
-                            <form action="signup" method="post">
+                            <form action="OTPRegister" method="get">
                                 <div class="row g-3">
                                     <!-- Username -->
                                     <div class="col-md-6">
