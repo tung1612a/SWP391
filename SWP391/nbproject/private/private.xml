@@ -5,10 +5,15 @@
         <group>
             <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/dal/DBContext.java</file>
             <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/utils/EmailUtility.java</file>
+            <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/controller/ChangePassword.java</file>
             <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/controller/ForgotPassword.java</file>
+            <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/web/WEB-INF/web.xml</file>
+            <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/controller/Login.java</file>
+            <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/web/UpdateProfile.jsp</file>
             <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/web/ForgotPassword.jsp</file>
+            <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/web/Login.jsp</file>
+            <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/web/ChangePassword.jsp</file>
             <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/dal/AccountDAO.java</file>
-            <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/utils/HashMD5.java</file>
             <file>file:/D:/FPTU/HKVIII/SWP392_RE_1/project/SWP391/SWP391/src/java/utils/RandomGenerate.java</file>
         </group>
     </open-files>
