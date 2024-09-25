@@ -1,6 +1,6 @@
 <%-- 
-    Document   : UpdateProfile
-    Created on : Sep 19, 2024, 8:53:57 PM
+    Document   : OTP
+    Created on : Sep 25, 2024, 2:08:41 AM
     Author     : ADMIN
 --%>
 
@@ -40,51 +40,41 @@
     <body>
         <%@ include file="header.jsp" %>
         <%@ include file="loader.jsp" %>
-        <div class="container-xxl py-5 px-0 wow fadeInUp bg-darker bg-secondary" data-wow-delay="0.1s">
+        
+
+        <div class="container-xxl py-5 px-0 wow fadeInUp bg-secondary" data-wow-delay="0.1s">
             <div class="row g-0 justify-content-center">
                 <div class="col-md-6 bg-dark d-flex align-items-center">
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Customer</h5>
-                        <h1 class="text-white mb-4">Update Information</h1>
-                        <form action="updateCustomer" method="post">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Account</h5>
+                        <h1 class="text-white mb-4">Enter OTP</h1>
+                        <p class="text-white mb-4">Please enter the OTP sent to your email</p>
+                        <form action="OTP" method="post"> 
                             <div class="row g-3">
-                                <!-- Customer Name -->
                                 <div class="col-md-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="customerName" placeholder="Customer Name" name="customerName" required>
-                                        <label for="customerName">Customer Name</label>
+                                        <input type="text" class="form-control" id="otp" placeholder="OTP" name="otp" required>
+                                        <label for="otp">OTP</label>
                                     </div>
-                                </div>
-                                <!-- Phone Number -->
-                                <div class="col-md-12">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" name="phoneNumber" required>
-                                        <label for="phoneNumber">Phone Number</label>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Verify OTP</button>
                                     </div>
-                                </div>
-                                <!-- Email -->
-                                <div class="col-md-12">
-                                    <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
-                                        <label for="email">Email</label>
-                                    </div>
-                                </div>
-                                <!-- Account ID (Hidden) -->
-                                <input type="hidden" name="accountID" value="<!-- Add dynamic AccountID here -->">
-
-                                <!-- Submit Button -->
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3" type="submit">Update Information</button>
                                 </div>
                             </div>
                         </form>
+
+                        <!--<p class="text-white mt-3">Didn't receive the OTP? <a href="resendOtp" class="text-primary">Resend OTP</a></p>  Link to resend OTP -->
+
+                        <c:if test="${not empty message}">
+                            <h1 class="text-white mt-3 message">${message}</h1>
+                        </c:if>
                     </div>
                 </div>
             </div>
         </div>
-
+                        
         <%@ include file="footer.jsp" %>
-
+        
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -99,5 +89,6 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+
     </body>
 </html>

@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import utils.PasswordUtil;
 import utils.Validation;
 
 /**
@@ -86,11 +87,10 @@ public class ChangePassword extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String oldPassword = request.getParameter("oldPassword");
-        String newPassword = request.getParameter("newPassword");
-        String renewPassword = request.getParameter("renewPassword");
         HttpSession session = request.getSession();
+        PasswordUtil pw = new PasswordUtil();
         Integer id = (Integer) session.getAttribute("id");
+        String newPassword = (String) session.getAttribute("newPassword");
         // Validate password
         Validation val = new Validation();
         String errorMessage = val.ValidatePassword(newPassword);
@@ -103,7 +103,7 @@ public class ChangePassword extends HttpServlet {
         if(id != null) {
             // Logged in, change password and redirect to page with resultMessage
             AccountDAO ad = new AccountDAO();
-            boolean note = ad.changePassword(id, oldPassword, newPassword, renewPassword);
+            boolean note = ad.changePassword(id, pw.hashPassword(newPassword));
             String resultMessage = "";
             if (note) {
                 resultMessage += "succes";

@@ -14,14 +14,27 @@ import model.*;
  */
 public class AccountDAO extends DBContext {
 
-    public boolean changePassword(int accountID, String oldPassword, String newPassword, String renewPassword) {
-        String verifyOldPasswordSql = "SELECT * FROM account WHERE AccountID = ? AND password = ?";
+    public boolean changePassword(int accountID, String newPassword) {
         String updatePasswordSql = "UPDATE account SET password = ? WHERE AccountID = ?";
 
-        // Verify the old password
         try {
-            //For adding MD5 later
+            // Update the password
+            PreparedStatement updateStatement = connection.prepareStatement(updatePasswordSql);
+            updateStatement.setString(1, newPassword);
+            updateStatement.setInt(2, accountID);
 
+            int rowsAffected = updateStatement.executeUpdate();
+            return rowsAffected > 0; // Return true if the update was successful
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false; // Update failed
+    }
+
+    public String checkInput(int accountID, String oldPassword, String newPassword, String renewPassword) {
+        String verifyOldPasswordSql = "SELECT * FROM account WHERE AccountID = ? AND password = ?";
+
+        try {
             // Check if the old password is correct
             PreparedStatement verifyStatement = connection.prepareStatement(verifyOldPasswordSql);
             verifyStatement.setInt(1, accountID);
@@ -31,23 +44,17 @@ public class AccountDAO extends DBContext {
             if (rs.next()) {
                 // Check if new passwords match
                 if (newPassword.equals(renewPassword)) {
-                    // Update the password 
-                    PreparedStatement updateStatement = connection.prepareStatement(updatePasswordSql);
-                    updateStatement.setString(1, newPassword);
-                    updateStatement.setInt(2, accountID);
-
-                    int rowsAffected = updateStatement.executeUpdate();
-                    return rowsAffected > 0;
+                    return "true"; // Input is valid
                 } else {
-                    System.out.println("New password and confirm password do not match.");
+                    return "New password and confirm password do not match."; // Mismatch message
                 }
             } else {
-                System.out.println("Old password is incorrect.");
+                return "Old password is incorrect."; // Incorrect password message
             }
         } catch (Exception e) {
             e.printStackTrace();
+            return "An error occurred during input validation."; // Error message
         }
-        return false;
     }
 
     public Account findAccountByEmail(String email) {
@@ -97,6 +104,32 @@ public class AccountDAO extends DBContext {
         }
 
         return null; // Return null if no account is found
+    }
+
+    public String findEmailByAccountID(int accountID) {
+        String email = null;
+        String sql = """
+                     SELECT Email FROM Admin WHERE AccountID = ?
+                     UNION
+                     SELECT Email FROM Staff WHERE AccountID = ?
+                     UNION 
+                     SELECT Email FROM Customer WHERE AccountID = ?""";
+
+        try ( PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, accountID);
+            statement.setInt(2, accountID);
+            statement.setInt(3, accountID);
+
+            ResultSet rs = statement.executeQuery();
+
+            if (rs.next()) {
+                email = rs.getString("Email");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return email; // Returns null if not found
     }
 
 }

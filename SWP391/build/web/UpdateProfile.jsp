@@ -41,47 +41,47 @@
         <%@ include file="header.jsp" %>
         <%@ include file="loader.jsp" %>
         <div class="container-xxl py-5 px-0 wow fadeInUp bg-darker bg-secondary" data-wow-delay="0.1s">
-    <div class="row g-0 justify-content-center">
-        <div class="col-md-6 bg-dark d-flex align-items-center">
-            <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
-                <h5 class="section-title ff-secondary text-start text-primary fw-normal">Customer</h5>
-                <h1 class="text-white mb-4">Update Information</h1>
-                <form action="updateCustomer" method="post">
-                    <div class="row g-3">
-                        <!-- Customer Name -->
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="customerName" placeholder="Customer Name" name="customerName" required>
-                                <label for="customerName">Customer Name</label>
+            <div class="row g-0 justify-content-center">
+                <div class="col-md-6 bg-dark d-flex align-items-center">
+                    <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
+                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">Customer</h5>
+                        <h1 class="text-white mb-4">Update Information</h1>
+                        <form action="updateCustomer" method="post">
+                            <div class="row g-3">
+                                <!-- Customer Name -->
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="customerName" placeholder="Customer Name" name="customerName" required>
+                                        <label for="customerName">Customer Name</label>
+                                    </div>
+                                </div>
+                                <!-- Phone Number -->
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" name="phoneNumber" required>
+                                        <label for="phoneNumber">Phone Number</label>
+                                    </div>
+                                </div>
+                                <!-- Email -->
+                                <div class="col-md-12">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
+                                        <label for="email">Email</label>
+                                    </div>
+                                </div>
+                                <!-- Account ID (Hidden) -->
+                                <input type="hidden" name="accountID" value="<!-- Add dynamic AccountID here -->">
+
+                                <!-- Submit Button -->
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Update Information</button>
+                                </div>
                             </div>
-                        </div>
-                        <!-- Phone Number -->
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="phoneNumber" placeholder="Phone Number" name="phoneNumber" required>
-                                <label for="phoneNumber">Phone Number</label>
-                            </div>
-                        </div>
-                        <!-- Email -->
-                        <div class="col-md-12">
-                            <div class="form-floating">
-                                <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
-                                <label for="email">Email</label>
-                            </div>
-                        </div>
-                        <!-- Account ID (Hidden) -->
-                        <input type="hidden" name="accountID" value="<!-- Add dynamic AccountID here -->">
-                        
-                        <!-- Submit Button -->
-                        <div class="col-12">
-                            <button class="btn btn-primary w-100 py-3" type="submit">Update Information</button>
-                        </div>
+                        </form>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
-    </div>
-</div>
 
         <%@ include file="footer.jsp" %>
 

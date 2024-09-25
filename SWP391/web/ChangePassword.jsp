@@ -50,7 +50,7 @@
                     <div class="p-5 wow fadeInUp" data-wow-delay="0.2s">
                         <h5 class="section-title ff-secondary text-start text-primary fw-normal">Account</h5>
                         <h1 class="text-white mb-4">Change Password</h1>
-                        <form action="changepass" method="post">
+                        <form action="OTP" method="get">
                             <div class="row g-3">
                                 <div class="col-md-12">
                                     <div class="form-floating">
