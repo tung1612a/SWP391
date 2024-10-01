@@ -5,7 +5,6 @@
 package utils;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.mail.*;
@@ -56,7 +55,7 @@ public class EmailUtility {
         String htmlContent = "<html lang=\"en\">";
         htmlContent += "<body>";
         htmlContent += "<h2>Quán ăn 5 Anh Lực gửi</h2>";
-        htmlContent += "<h1>" + Content + "</h1>";
+        htmlContent += "<h5>" + Content + "</h5>";
         htmlContent += "<h2 style=\"color: red; text-transform: uppercase;\">Đây là email tự động, xin đừng trả lời email này</h2>";
         htmlContent += "</body>";
         htmlContent += "</html>";
