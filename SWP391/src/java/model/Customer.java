@@ -9,24 +9,36 @@ package model;
  * @author Admin
  */
 public class Customer {
-     private int customerID;
+    private int customerID;
     private String customerName;
     private String phoneNumber;
     private String email;
     private int point;
     private int accountID;
+    private Account account;
 
     public Customer() {
     }
 
-    public Customer(int customerID, String customerName, String phoneNumber, String email, int point, int accountID) {
+    public Customer(int customerID, String customerName, String phoneNumber, String email, int point, int accountID, Account account) {
         this.customerID = customerID;
         this.customerName = customerName;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.point = point;
         this.accountID = accountID;
+        this.account = account;
     }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+
 
     public int getCustomerID() {
         return customerID;

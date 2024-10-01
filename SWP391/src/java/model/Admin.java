@@ -14,6 +14,7 @@ public class Admin {
     private String phoneNumber;
     private String email;
     private int accountID;
+    private Account account;
 
     public Admin() {
     }
